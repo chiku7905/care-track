@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Inline theme: prevents white flash before CSS loads -->
+  <script>
+    (function(){
+      try {
+        var s = localStorage.getItem('caretrack_session');
+        var theme = 'light';
+        if (s) {
+          var sess = JSON.parse(s);
+          if (sess && sess.userId) {
+            var st = localStorage.getItem('caretrack_settings_' + sess.userId);
+            if (st) { var settings = JSON.parse(st); if (settings && settings.theme) theme = settings.theme; }
+          }
+        }
+        if (theme === 'light') theme = localStorage.getItem('caretrack_theme') || 'light';
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch(e) {}
+    })();
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login — CareTrack Healthcare Management</title>
+  <link rel="icon" type="image/svg+xml" href="assets/icon.svg">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/auth.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body class="auth-page">
+
+  <div class="auth-wrapper auth-wide">
+    <div class="auth-card">
+      <div class="auth-header">
+        <a href="index.html" class="auth-logo">
+          <img src="assets/logo.svg" alt="CareTrack Logo" height="42">
+        </a>
+        <h1 class="auth-title">Welcome Back</h1>
+        <p class="auth-subtitle">Log in to manage your medications, appointments, and care</p>
+      </div>
+
+      <!-- Alert Message Box -->
+      <div id="login-alert" class="auth-alert" role="alert"></div>
+
+      <!-- Login Form -->
+      <form id="login-form" novalidate>
+        <div class="form-group">
+          <label for="login-email" class="form-label">Email Address</label>
+          <div class="input-with-icon">
+            <span class="input-icon-left">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+              </svg>
+            </span>
+            <input 
+              type="email" 
+              id="login-email" 
+              name="email" 
+              class="form-control" 
+              placeholder="name@caretrack.demo" 
+              required 
+              autocomplete="email"
+            >
+          </div>
+          <div class="form-error" id="email-error">Please enter a valid email address.</div>
+        </div>
+
+        <div class="form-group">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+            <label for="login-password" class="form-label" style="margin-bottom: 0;">Password</label>
+            <a href="#" id="forgot-password-link" class="text-sm text-primary" style="font-weight: 600;">Forgot Password?</a>
+          </div>
+          <div class="input-with-icon">
+            <span class="input-icon-left">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+            </span>
+            <input 
+              type="password" 
+              id="login-password" 
+              name="password" 
+              class="form-control" 
+              placeholder="Enter your password" 
+              required 
+              autocomplete="current-password"
+            >
+            <button type="button" class="password-toggle-btn" id="toggle-password" title="Show or hide password" aria-label="Toggle password visibility">
+              <svg id="eye-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </button>
+          </div>
+          <div class="form-error" id="password-error">Password is required.</div>
+        </div>
+
+        <div class="auth-flex-row">
+          <label class="checkbox-label">
+            <input type="checkbox" id="remember-me" checked>
+            <span>Remember this device</span>
+          </label>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-submit" id="btn-login-submit">
+          <span class="btn-spinner" id="login-spinner"></span>
+          <span class="btn-text">Sign In</span>
+        </button>
+      </form>
+
+      <div class="auth-footer">
+        Don't have an account yet? <a href="signup.html" style="font-weight: 700;">Create one now</a>
+      </div>
+    </div>
+
+    <!-- REQUIRED Demo Accounts Panel -->
+    <div class="demo-accounts-card">
+      <div class="demo-accounts-title">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+          <circle cx="9" cy="7" r="4"></circle>
+          <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+        </svg>
+        <span>Demo Accounts (Instant Fill)</span>
+      </div>
+      <p class="demo-accounts-subtitle">
+        Click <strong>Use Demo Account</strong> to pre-fill credentials, then click <strong>Sign In</strong> to explore their personalized medical dashboard.
+      </p>
+
+      <div class="demo-account-list">
+        <!-- Demo User 1: Kartavya Singh -->
+        <div class="demo-account-item">
+          <div class="demo-user-meta">
+            <div class="demo-user-avatar">KS</div>
+            <div class="demo-user-info">
+              <span class="demo-user-name">Kartavya Singh</span>
+              <span class="demo-user-email">kartavya@caretrack.demo</span>
+            </div>
+          </div>
+          <button type="button" class="btn-fill-demo" data-email="kartavya@caretrack.demo" data-pass="9453583811">
+            Use Demo Account
+          </button>
+        </div>
+
+        <!-- Demo User 2: GGIT -->
+        <div class="demo-account-item">
+          <div class="demo-user-meta">
+            <div class="demo-user-avatar">GG</div>
+            <div class="demo-user-info">
+              <span class="demo-user-name">GGIT</span>
+              <span class="demo-user-email">ggit@caretrack.demo</span>
+            </div>
+          </div>
+          <button type="button" class="btn-fill-demo" data-email="ggit@caretrack.demo" data-pass="209801">
+            Use Demo Account
+          </button>
+        </div>
+
+        <!-- Demo User 3: ZCOP -->
+        <div class="demo-account-item">
+          <div class="demo-user-meta">
+            <div class="demo-user-avatar">ZC</div>
+            <div class="demo-user-info">
+              <span class="demo-user-name">ZCOP</span>
+              <span class="demo-user-email">zcop@caretrack.demo</span>
+            </div>
+          </div>
+          <button type="button" class="btn-fill-demo" data-email="zcop@caretrack.demo" data-pass="209801">
+            Use Demo Account
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="auth-disclaimer">
+      Educational &amp; Front-end Demonstration. Uses browser LocalStorage for data persistence.
+    </div>
+  </div>
+
+  <!-- Forgot Password Modal -->
+  <div class="modal-overlay" id="forgot-password-modal">
+    <div class="modal-container" style="max-width: 440px;">
+      <div class="modal-header">
+        <h3 class="modal-title">Reset Demo Password</h3>
+        <button class="modal-close" id="close-forgot-modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 0.9rem; color: var(--muted-text); margin-bottom: 1.25rem;">
+          In this client-side demo, enter your registered email address to reveal your saved demo password or quick reset hint.
+        </p>
+        <div class="form-group">
+          <label for="reset-email" class="form-label">Account Email</label>
+          <input type="email" id="reset-email" class="form-control" placeholder="Enter your registered email">
+        </div>
+        <div id="reset-result" style="display: none; padding: 0.85rem; border-radius: var(--radius-md); font-size: 0.85rem; margin-top: 0.75rem;"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline" id="btn-cancel-reset">Cancel</button>
+        <button type="button" class="btn btn-primary" id="btn-find-password">Retrieve Password</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+
+  <script src="js/storage.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/common.js"></script>
+  <script>
+    // Redirect if already authenticated
+    if (Auth.isAuthenticated()) {
+      window.location.href = 'dashboard.html';
+    }
+
+    const loginForm = document.getElementById('login-form');
+    const emailInput = document.getElementById('login-email');
+    const passwordInput = document.getElementById('login-password');
+    const togglePasswordBtn = document.getElementById('toggle-password');
+    const eyeIcon = document.getElementById('eye-icon');
+    const rememberMeCheckbox = document.getElementById('remember-me');
+    const submitBtn = document.getElementById('btn-login-submit');
+    const alertBox = document.getElementById('login-alert');
+    const emailError = document.getElementById('email-error');
+    const passwordError = document.getElementById('password-error');
+
+    // Password show/hide toggle
+    togglePasswordBtn.addEventListener('click', () => {
+      const isPassword = passwordInput.getAttribute('type') === 'password';
+      passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
+      if (isPassword) {
+        eyeIcon.innerHTML = `<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>`;
+      } else {
+        eyeIcon.innerHTML = `<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>`;
+      }
+    });
+
+    // Demo Account Autofill Buttons
+    document.querySelectorAll('.btn-fill-demo').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const email = btn.getAttribute('data-email');
+        const pass = btn.getAttribute('data-pass');
+        emailInput.value = email;
+        passwordInput.value = pass;
+        hideAlert();
+        emailError.classList.remove('visible');
+        passwordError.classList.remove('visible');
+        passwordInput.focus();
+        Common.showToast(`Pre-filled credentials for ${btn.parentElement.querySelector('.demo-user-name').textContent}`, 'info');
+      });
+    });
+
+    function showAlert(msg, isError = true) {
+      alertBox.textContent = msg;
+      alertBox.className = `auth-alert visible ${isError ? 'auth-alert-danger' : 'auth-alert-success'}`;
+    }
+
+    function hideAlert() {
+      alertBox.className = 'auth-alert';
+      alertBox.textContent = '';
+    }
+
+    // Form submission
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      hideAlert();
+      let hasError = false;
+
+      const email = emailInput.value.trim();
+      const password = passwordInput.value;
+
+      if (!email || !/\S+@\S+\.\S+/.test(email)) {
+        emailError.classList.add('visible');
+        hasError = true;
+      } else {
+        emailError.classList.remove('visible');
+      }
+
+      if (!password) {
+        passwordError.classList.add('visible');
+        hasError = true;
+      } else {
+        passwordError.classList.remove('visible');
+      }
+
+      if (hasError) return;
+
+      // Show loading state
+      submitBtn.classList.add('loading');
+      submitBtn.disabled = true;
+
+      setTimeout(() => {
+        const result = Auth.login(email, password, rememberMeCheckbox.checked);
+
+        if (result.success) {
+          showAlert(`Welcome, ${result.user.name}! Redirecting to dashboard...`, false);
+          setTimeout(() => {
+            window.location.href = 'dashboard.html';
+          }, 600);
+        } else {
+          submitBtn.classList.remove('loading');
+          submitBtn.disabled = false;
+          showAlert(result.message, true);
+        }
+      }, 500);
+    });
+
+    // Forgot Password Flow
+    const forgotLink = document.getElementById('forgot-password-link');
+    const forgotModal = document.getElementById('forgot-password-modal');
+    const closeForgotModal = document.getElementById('close-forgot-modal');
+    const cancelReset = document.getElementById('btn-cancel-reset');
+    const findPasswordBtn = document.getElementById('btn-find-password');
+    const resetEmailInput = document.getElementById('reset-email');
+    const resetResult = document.getElementById('reset-result');
+
+    forgotLink.onclick = (e) => {
+      e.preventDefault();
+      resetEmailInput.value = emailInput.value || '';
+      resetResult.style.display = 'none';
+      Common.openModal('forgot-password-modal');
+    };
+
+    closeForgotModal.onclick = () => Common.closeModal('forgot-password-modal');
+    cancelReset.onclick = () => Common.closeModal('forgot-password-modal');
+
+    findPasswordBtn.onclick = () => {
+      const email = resetEmailInput.value.trim().toLowerCase();
+      if (!email) {
+        resetResult.style.display = 'block';
+        resetResult.style.backgroundColor = 'var(--danger-bg)';
+        resetResult.style.color = 'var(--danger)';
+        resetResult.textContent = 'Please provide an email address.';
+        return;
+      }
+
+      const users = JSON.parse(localStorage.getItem('caretrack_users') || '[]');
+      const user = users.find(u => u.email.toLowerCase() === email);
+
+      resetResult.style.display = 'block';
+      if (user) {
+        resetResult.style.backgroundColor = 'var(--success-bg)';
+        resetResult.style.color = 'var(--success)';
+        resetResult.innerHTML = `Demo Password for <strong>${Common.escapeHtml(user.name)}</strong>: <code style="font-weight: 700; background: rgba(0,0,0,0.06); padding: 2px 6px; border-radius: 4px;">${Common.escapeHtml(user.password)}</code>`;
+      } else {
+        resetResult.style.backgroundColor = 'var(--danger-bg)';
+        resetResult.style.color = 'var(--danger)';
+        resetResult.textContent = 'No user account found matching this email address.';
+      }
+    };
+  </script>
+</body>
+</html>

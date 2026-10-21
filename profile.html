@@ -1,0 +1,287 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Inline theme: prevents white flash before CSS loads -->
+  <script>
+    (function(){
+      try {
+        var s = localStorage.getItem('caretrack_session');
+        var theme = 'light';
+        if (s) {
+          var sess = JSON.parse(s);
+          if (sess && sess.userId) {
+            var st = localStorage.getItem('caretrack_settings_' + sess.userId);
+            if (st) { var settings = JSON.parse(st); if (settings && settings.theme) theme = settings.theme; }
+          }
+        }
+        if (theme === 'light') theme = localStorage.getItem('caretrack_theme') || 'light';
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch(e) {}
+    })();
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Profile â€” CareTrack Healthcare Management</title>
+  <link rel="icon" type="image/svg+xml" href="assets/icon.svg">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="app-sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <a href="dashboard.html" class="sidebar-logo">
+          <img src="assets/logo.svg" alt="CareTrack Logo">
+        </a>
+        <button class="sidebar-close-btn" id="sidebar-close-btn" aria-label="Close sidebar">&times;</button>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-label">Main Menu</div>
+        <a href="dashboard.html" class="sidebar-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <rect x="3" y="3" width="7" height="7" rx="1.5"></rect>
+            <rect x="14" y="3" width="7" height="7" rx="1.5"></rect>
+            <rect x="14" y="14" width="7" height="7" rx="1.5"></rect>
+            <rect x="3" y="14" width="7" height="7" rx="1.5"></rect>
+          </svg>
+          <span>Dashboard</span>
+        </a>
+
+        <a href="medicines.html" class="sidebar-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"></path>
+            <path d="m8.5 8.5 7 7"></path>
+          </svg>
+          <span>Medicines</span>
+          <span class="badge-counter" id="sidebar-meds-badge">0</span>
+        </a>
+
+        <a href="appointments.html" class="sidebar-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+          <span>Appointments</span>
+          <span class="badge-counter" id="sidebar-apts-badge">0</span>
+        </a>
+
+        <a href="tasks.html" class="sidebar-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <polyline points="9 11 12 14 22 4"></polyline>
+            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+          </svg>
+          <span>Care Tasks</span>
+        </a>
+
+        <a href="emergency.html" class="sidebar-link" style="color: var(--danger);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+          </svg>
+          <span>Emergency</span>
+        </a>
+
+        <div class="nav-section-label">Medical Records</div>
+        <a href="records.html" class="sidebar-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+          </svg>
+          <span>Health Records</span>
+        </a>
+
+        <div class="nav-section-label">Account</div>
+        <a href="profile.html" class="sidebar-link active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          <span>Profile</span>
+        </a>
+
+        <a href="settings.html" class="sidebar-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+          <span>Settings</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button type="button" class="sidebar-link logout-link" id="btn-logout" style="width: 100%; border: none; cursor: pointer; text-align: left;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          <span>Log Out</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="app-main">
+      <header class="app-header">
+        <div class="header-left">
+          <button class="menu-toggle-btn" aria-label="Toggle menu">â˜°</button>
+          <div class="header-search">
+            <span class="header-search-icon">ðŸ”</span>
+            <input type="text" placeholder="Search profile settings...">
+          </div>
+        </div>
+
+        <div class="header-right">
+          <button class="theme-toggle-btn" title="Toggle Theme">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          </button>
+
+          <div class="notification-wrapper">
+            <button class="notification-btn" aria-label="Notifications">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+              </svg>
+              <span class="notification-badge"></span>
+            </button>
+            <div class="notification-dropdown">
+              <div class="notification-header">
+                <h4>Notifications</h4>
+                <button class="btn btn-sm btn-outline notification-clear-btn">Clear All</button>
+              </div>
+              <div class="notification-list"></div>
+            </div>
+          </div>
+
+          <a href="profile.html" class="header-user-pill">
+            <div class="user-avatar header-user-avatar">CT</div>
+            <div>
+              <div class="user-meta-name header-user-name">Loading...</div>
+              <span class="user-meta-role header-user-role">Member</span>
+            </div>
+          </a>
+        </div>
+      </header>
+
+      <div class="dashboard-content">
+        <!-- Page Header -->
+        <div class="view-header">
+          <div class="view-title-group">
+            <h1>User Profile &amp; Demographics</h1>
+            <p>Manage your personal identification, contact phone, and medical identity credentials.</p>
+          </div>
+        </div>
+
+        <div class="dashboard-grid">
+          <!-- Left Column: Profile Card & Quick Stats -->
+          <div class="dashboard-column">
+            <!-- User Identification Card -->
+            <div class="card" style="text-align: center; padding: 2.5rem 1.5rem;">
+              <div class="user-avatar" id="profile-big-avatar" style="width: 84px; height: 84px; font-size: 2rem; margin: 0 auto 1.25rem; box-shadow: var(--shadow-md);">
+                KS
+              </div>
+              <h2 id="profile-display-name" style="font-size: 1.5rem; margin-bottom: 0.25rem;">Kartavya Singh</h2>
+              <div id="profile-display-role" class="badge badge-primary" style="margin-bottom: 1.25rem;">Patient / Member</div>
+              <div style="font-size: 0.85rem; color: var(--muted-text);" id="profile-display-email">kartavya@caretrack.demo</div>
+              <div style="font-size: 0.85rem; color: var(--muted-text); margin-top: 0.2rem;" id="profile-display-phone">+91 94535 83811</div>
+
+              <div class="profile-stats-grid">
+                <div>
+                  <div style="font-size: 1.25rem; font-weight: 800; color: var(--primary);" id="stat-meds-total">0</div>
+                  <div style="font-size: 0.7rem; color: var(--muted-text); font-weight: 600;">PRESCRIPTIONS</div>
+                </div>
+                <div>
+                  <div style="font-size: 1.25rem; font-weight: 800; color: var(--secondary);" id="stat-tasks-total">0</div>
+                  <div style="font-size: 0.7rem; color: var(--muted-text); font-weight: 600;">CARE TASKS</div>
+                </div>
+                <div>
+                  <div style="font-size: 1.25rem; font-weight: 800; color: var(--info);" id="stat-records-total">0</div>
+                  <div style="font-size: 0.7rem; color: var(--muted-text); font-weight: 600;">RECORDS</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Account Metadata Card -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Account Registration Details</h3>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 0.85rem; font-size: 0.9rem;">
+                <div style="display: flex; justify-content: space-between;">
+                  <span class="text-muted">Account ID:</span>
+                  <strong id="meta-user-id" style="font-family: monospace; color: var(--dark-text);">user_kartavya</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                  <span class="text-muted">Member Since:</span>
+                  <strong id="meta-created-at">Jan 15, 2026</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                  <span class="text-muted">Storage Sync:</span>
+                  <span class="badge badge-success">Local Browser Storage</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Edit Profile Form -->
+          <div class="dashboard-column">
+            <div class="card">
+              <div class="card-header">
+                <h2 class="card-title">Edit Personal Details</h2>
+              </div>
+
+              <form id="profile-edit-form" novalidate>
+                <div class="form-group">
+                  <label for="edit-name" class="form-label">Full Name *</label>
+                  <input type="text" id="edit-name" class="form-control" required>
+                  <div class="form-error" id="edit-name-error">Please enter your name.</div>
+                </div>
+
+                <div class="form-group">
+                  <label for="edit-email" class="form-label">Email Address *</label>
+                  <input type="email" id="edit-email" class="form-control" required>
+                  <div class="form-error" id="edit-email-error">Please provide a valid email.</div>
+                </div>
+
+                <div class="form-group">
+                  <label for="edit-phone" class="form-label">Phone Number *</label>
+                  <input type="tel" id="edit-phone" class="form-control" required>
+                  <div class="form-error" id="edit-phone-error">Please provide a contact phone.</div>
+                </div>
+
+                <div class="form-group">
+                  <label for="edit-role" class="form-label">Care Role / Designation</label>
+                  <input type="text" id="edit-role" class="form-control" placeholder="e.g. Patient / Caregiver">
+                </div>
+
+                <div style="margin-top: 1.5rem; display: flex; justify-content: flex-end; gap: 0.75rem;">
+                  <button type="submit" class="btn btn-primary" id="btn-save-profile">
+                    Save Profile Changes
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div id="toast-container"></div>
+
+  <script src="js/storage.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/profile.js"></script>
+</body>
+</html>
+

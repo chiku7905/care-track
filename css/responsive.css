@@ -1,0 +1,466 @@
+/* CareTrack - Modern Healthcare Management System
+   Responsive Breakpoints Stylesheet (responsive.css) */
+
+/* ============================================================
+   Large Tablets & Small Laptops  (max-width: 1024px)
+   ============================================================ */
+@media (max-width: 1024px) {
+  .hero-section {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    padding: 3.5rem 1.5rem;
+  }
+
+  .hero-mockup-wrapper {
+    max-width: 550px;
+    margin: 0 auto;
+  }
+
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .summary-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  /* Settings grid collapses early on small laptops */
+  .settings-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+/* ============================================================
+   Tablets  (max-width: 768px)
+   ============================================================ */
+@media (max-width: 768px) {
+  :root {
+    --header-height: 64px;
+  }
+
+  /* ----------- Landing Navigation ----------- */
+  .nav-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: var(--card-bg);
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: var(--shadow-md);
+    flex-direction: column;
+    padding: 1.5rem;
+    gap: 1.25rem;
+  }
+
+  .nav-menu.open {
+    display: flex;
+  }
+
+  .nav-toggle-mobile {
+    display: block;
+  }
+
+  .hero-title {
+    font-size: 2.4rem;
+  }
+
+  .how-steps-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .step-number {
+    margin-top: -30px;
+  }
+
+  /* ----------- Dashboard Shell ----------- */
+  .app-sidebar {
+    transform: translateX(-100%);
+    box-shadow: var(--shadow-lg);
+    z-index: 1000;
+  }
+
+  .app-sidebar.active {
+    transform: translateX(0);
+  }
+
+  .sidebar-close-btn {
+    display: block;
+  }
+
+  .app-main {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .menu-toggle-btn {
+    display: block;
+  }
+
+  .dashboard-content {
+    padding: 1.25rem;
+  }
+
+  /* ----------- Header ----------- */
+  .header-left {
+    max-width: 240px;
+  }
+
+  .header-search input {
+    font-size: 0.85rem;
+  }
+
+  .header-right {
+    gap: 0.65rem;
+  }
+
+  .user-meta-name,
+  .user-meta-role {
+    display: none;
+  }
+
+  .header-user-pill {
+    padding: 2px;
+    border: none;
+    background: transparent;
+  }
+
+  /* ----------- Notification Dropdown ----------- */
+  .notification-dropdown {
+    width: calc(100vw - 2rem);
+    right: -60px;
+    max-width: 340px;
+  }
+
+  /* ----------- Dashboard Summary Cards ----------- */
+  .summary-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* ----------- Dashboard Grid ----------- */
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* ----------- Floating Badge ----------- */
+  .floating-badge {
+    display: none;
+  }
+
+  /* ----------- Toolbar ----------- */
+  .toolbar-card {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .toolbar-card > div:last-child {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .toolbar-filters {
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+  }
+
+  /* ----------- View Header ----------- */
+  .view-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .view-header .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* ----------- Entity Cards Grid ----------- */
+  .entity-cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* ----------- Care Table (horizontal scroll) ----------- */
+  .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .care-table {
+    min-width: 600px;
+  }
+
+  /* ----------- Settings Grid ----------- */
+  .settings-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* ----------- Auth pages ----------- */
+  .auth-wrapper {
+    padding: 1.5rem 1rem;
+  }
+}
+
+/* ============================================================
+   Mobile Phones  (max-width: 480px)
+   ============================================================ */
+@media (max-width: 480px) {
+  h1 { font-size: 1.65rem; }
+  h2 { font-size: 1.35rem; }
+
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .hero-cta-group {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .hero-cta-group .btn {
+    width: 100%;
+  }
+
+  .hero-stats {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* ----------- Summary Cards: 1 col on mobile ----------- */
+  .summary-cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* ----------- Footer ----------- */
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 0.75rem;
+    text-align: center;
+  }
+
+  /* ----------- App Header ----------- */
+  .app-header {
+    padding: 0 1rem;
+  }
+
+  .header-search {
+    display: none;
+  }
+
+  /* ----------- Dashboard Content Padding ----------- */
+  .dashboard-content {
+    padding: 0.85rem;
+  }
+
+  /* ----------- Auth Card ----------- */
+  .auth-card {
+    padding: 1.75rem 1.25rem;
+  }
+
+  /* ----------- Modal: bottom-sheet style on mobile ----------- */
+  .modal-overlay {
+    align-items: flex-end;
+    padding: 0;
+  }
+
+  .modal-container {
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 0;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  }
+
+  .modal-header,
+  .modal-body,
+  .modal-footer {
+    padding: 1rem;
+  }
+
+  /* ----------- Entity Cards ----------- */
+  .entity-cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* ----------- Toast Notifications ----------- */
+  #toast-container {
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+  }
+
+  .toast {
+    min-width: unset;
+    width: 100%;
+  }
+
+  /* ----------- Notification Dropdown ----------- */
+  .notification-dropdown {
+    width: calc(100vw - 1rem);
+    right: -80px;
+    max-width: unset;
+  }
+
+  /* ----------- 2-col utility grid collapses ----------- */
+  .grid-2col {
+    grid-template-columns: 1fr;
+  }
+
+  /* ----------- Profile stats strip collapses to single row ----------- */
+  .profile-stats-grid {
+    grid-template-columns: repeat(3, 1fr); /* keep 3 on 480px — only tiny phones need 1 */
+  }
+
+  /* ----------- Toolbar inputs full-width ----------- */
+  .toolbar-card > div:last-child {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .toolbar-card > div:last-child input,
+  .toolbar-card > div:last-child select {
+    width: 100% !important;
+  }
+
+  /* ----------- Table Responsive Wrapper ----------- */
+  .table-responsive {
+    border-radius: var(--radius-sm);
+  }
+
+  /* ----------- Progress Ring smaller on mobile ----------- */
+  .progress-ring-container {
+    width: 90px;
+    height: 90px;
+  }
+
+  /* ----------- Dashboard header welcome text ----------- */
+  .welcome-section h1 {
+    font-size: 1.4rem;
+  }
+
+  .welcome-section p {
+    font-size: 0.875rem;
+  }
+
+  /* ----------- Quick action buttons ----------- */
+  .quick-actions {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .quick-actions .btn {
+    flex: 1 1 calc(50% - 0.25rem);
+    font-size: 0.8rem;
+    padding: 0.5rem 0.75rem;
+  }
+}
+
+/* ============================================================
+   Very Small Phones  (max-width: 380px)
+   ============================================================ */
+@media (max-width: 380px) {
+  .header-right {
+    gap: 0.4rem;
+  }
+
+  .notification-btn,
+  .theme-toggle-btn {
+    width: 34px;
+    height: 34px;
+  }
+
+  .user-avatar {
+    width: 30px;
+    height: 30px;
+    font-size: 0.75rem;
+  }
+
+  .summary-card {
+    padding: 1rem;
+  }
+
+  .summary-card .card-value {
+    font-size: 1.6rem;
+  }
+
+  /* Profile stats: stack on truly tiny phones */
+  .profile-stats-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .dashboard-content {
+    padding: 0.65rem;
+  }
+
+  /* Auth card tighter on tiny screens */
+  .auth-card {
+    padding: 1.25rem 1rem;
+  }
+
+  /* Demo accounts panel */
+  .demo-accounts-panel {
+    padding: 0.75rem;
+  }
+}
+
+/* ============================================================
+   Sidebar Drawer Backdrop Overlay
+   ============================================================ */
+.sidebar-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(16, 45, 67, 0.5);
+  backdrop-filter: blur(3px);
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--transition-normal), visibility var(--transition-normal);
+}
+
+.sidebar-backdrop.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ============================================================
+   Print styles (hide nav chrome when printing records)
+   ============================================================ */
+@media print {
+  .app-sidebar,
+  .app-header,
+  .toolbar-card,
+  .view-header .btn,
+  #toast-container {
+    display: none !important;
+  }
+
+  .app-main {
+    margin-left: 0 !important;
+  }
+
+  .dashboard-content {
+    padding: 0 !important;
+  }
+}

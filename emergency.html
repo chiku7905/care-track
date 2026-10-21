@@ -1,0 +1,397 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Inline theme: prevents white flash before CSS loads -->
+  <script>
+    (function(){
+      try {
+        var s = localStorage.getItem('caretrack_session');
+        var theme = 'light';
+        if (s) {
+          var sess = JSON.parse(s);
+          if (sess && sess.userId) {
+            var st = localStorage.getItem('caretrack_settings_' + sess.userId);
+            if (st) { var settings = JSON.parse(st); if (settings && settings.theme) theme = settings.theme; }
+          }
+        }
+        if (theme === 'light') theme = localStorage.getItem('caretrack_theme') || 'light';
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch(e) {}
+    })();
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emergency Care â€” CareTrack Healthcare Management</title>
+  <link rel="icon" type="image/svg+xml" href="assets/icon.svg">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="app-sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <a href="dashboard.html" class="sidebar-logo">
+          <img src="assets/logo.svg" alt="CareTrack Logo">
+        </a>
+        <button class="sidebar-close-btn" id="sidebar-close-btn" aria-label="Close sidebar">&times;</button>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-label">Main Menu</div>
+        <a href="dashboard.html" class="sidebar-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <rect x="3" y="3" width="7" height="7" rx="1.5"></rect>
+            <rect x="14" y="3" width="7" height="7" rx="1.5"></rect>
+            <rect x="14" y="14" width="7" height="7" rx="1.5"></rect>
+            <rect x="3" y="14" width="7" height="7" rx="1.5"></rect>
+          </svg>
+          <span>Dashboard</span>
+        </a>
+
+        <a href="medicines.html" class="sidebar-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"></path>
+            <path d="m8.5 8.5 7 7"></path>
+          </svg>
+          <span>Medicines</span>
+          <span class="badge-counter" id="sidebar-meds-badge">0</span>
+        </a>
+
+        <a href="appointments.html" class="sidebar-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+          <span>Appointments</span>
+          <span class="badge-counter" id="sidebar-apts-badge">0</span>
+        </a>
+
+        <a href="tasks.html" class="sidebar-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <polyline points="9 11 12 14 22 4"></polyline>
+            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+          </svg>
+          <span>Care Tasks</span>
+        </a>
+
+        <a href="emergency.html" class="sidebar-link active" style="color: var(--danger);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+          </svg>
+          <span>Emergency</span>
+        </a>
+
+        <div class="nav-section-label">Medical Records</div>
+        <a href="records.html" class="sidebar-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+          </svg>
+          <span>Health Records</span>
+        </a>
+
+        <div class="nav-section-label">Account</div>
+        <a href="profile.html" class="sidebar-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          <span>Profile</span>
+        </a>
+
+        <a href="settings.html" class="sidebar-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+          <span>Settings</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button type="button" class="sidebar-link logout-link" id="btn-logout" style="width: 100%; border: none; cursor: pointer; text-align: left;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          <span>Log Out</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="app-main">
+      <header class="app-header">
+        <div class="header-left">
+          <button class="menu-toggle-btn" aria-label="Toggle menu">â˜°</button>
+          <div class="header-search">
+            <span class="header-search-icon">ðŸ”</span>
+            <input type="text" placeholder="Search contacts...">
+          </div>
+        </div>
+
+        <div class="header-right">
+          <button class="theme-toggle-btn" title="Toggle Theme">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          </button>
+
+          <div class="notification-wrapper">
+            <button class="notification-btn" aria-label="Notifications">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+              </svg>
+              <span class="notification-badge"></span>
+            </button>
+            <div class="notification-dropdown">
+              <div class="notification-header">
+                <h4>Notifications</h4>
+                <button class="btn btn-sm btn-outline notification-clear-btn">Clear All</button>
+              </div>
+              <div class="notification-list"></div>
+            </div>
+          </div>
+
+          <a href="profile.html" class="header-user-pill">
+            <div class="user-avatar header-user-avatar">CT</div>
+            <div>
+              <div class="user-meta-name header-user-name">Loading...</div>
+              <span class="user-meta-role header-user-role">Member</span>
+            </div>
+          </a>
+        </div>
+      </header>
+
+      <div class="dashboard-content">
+        <!-- Page Header -->
+        <div class="view-header">
+          <div class="view-title-group">
+            <h1 style="color: var(--danger);">Emergency &amp; Immediate Care</h1>
+            <p>Access instant contacts, designated family caregivers, and critical medical alerts.</p>
+          </div>
+          <button type="button" class="btn btn-outline" id="btn-edit-emergency">
+            âœï¸ Edit Emergency Contacts
+          </button>
+        </div>
+
+        <!-- Mandatory Disclaimer Notice Banner -->
+        <div style="background-color: var(--danger-bg); border-left: 5px solid var(--danger); border-radius: var(--radius-md); padding: 1.25rem 1.5rem; margin-bottom: 2rem;">
+          <div style="display: flex; gap: 1rem; align-items: flex-start;">
+            <span style="font-size: 1.75rem;">âš ï¸</span>
+            <div>
+              <h3 style="color: var(--danger); font-size: 1.1rem; margin-bottom: 0.25rem;">Medical Emergency Disclaimer</h3>
+              <p style="font-size: 0.9rem; color: var(--body-text); margin: 0; line-height: 1.5;">
+                This web platform is an educational prototype and is <strong>NOT</strong> connected to 911/112 or official ambulance dispatch services. If you or someone around you is in immediate life-threatening danger, call your local national emergency helpline right away.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Emergency Cards Grid -->
+        <div class="dashboard-grid">
+          <!-- Left Column: Primary & Secondary Contacts -->
+          <div class="dashboard-column">
+            <!-- Primary Emergency Contact Card -->
+            <div class="card" style="border-left: 5px solid var(--danger);">
+              <div class="card-header">
+                <h2 class="card-title" style="color: var(--danger);">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                  </svg>
+                  Primary Emergency Contact
+                </h2>
+                <span class="badge badge-danger">Priority 1</span>
+              </div>
+
+              <div style="margin-bottom: 1.25rem;">
+                <div style="font-size: 0.8rem; color: var(--muted-text); font-weight: 700; text-transform: uppercase;">CONTACT PERSON</div>
+                <div style="font-size: 1.4rem; font-weight: 800; color: var(--dark-text);" id="em-primary-name">Loading...</div>
+                <div style="font-size: 0.95rem; color: var(--primary); font-weight: 600;" id="em-primary-relation">Family Doctor</div>
+              </div>
+
+              <div style="margin-bottom: 1.5rem;">
+                <div style="font-size: 0.8rem; color: var(--muted-text); font-weight: 700; text-transform: uppercase;">PHONE NUMBER</div>
+                <div style="font-size: 1.25rem; font-weight: 700; color: var(--dark-text);" id="em-primary-phone">+91 00000 00000</div>
+              </div>
+
+              <a href="#" id="em-call-primary-btn" class="emergency-action-btn" style="font-size: 1.05rem; padding: 1rem;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                </svg>
+                <span>Call Primary Emergency Contact</span>
+              </a>
+            </div>
+
+            <!-- Secondary Contact Card -->
+            <div class="card">
+              <div class="card-header">
+                <h2 class="card-title">Secondary Contact / Family Member</h2>
+                <span class="badge badge-neutral">Priority 2</span>
+              </div>
+
+              <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                <div>
+                  <div style="font-size: 1.15rem; font-weight: 700; color: var(--dark-text);" id="em-secondary-name">Spouse / Guardian</div>
+                  <div style="font-size: 0.85rem; color: var(--muted-text);" id="em-secondary-relation">Family Member</div>
+                  <div style="font-size: 1rem; font-weight: 600; color: var(--primary); margin-top: 0.25rem;" id="em-secondary-phone">+91 00000 00000</div>
+                </div>
+                <a href="#" id="em-call-secondary-btn" class="btn btn-outline">
+                  ðŸ“ž Call Secondary
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Critical Medical Info & Hotlines -->
+          <div class="dashboard-column">
+            <!-- Critical Medical Info Badge -->
+            <div class="card">
+              <div class="card-header">
+                <h2 class="card-title">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2">
+                    <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                  </svg>
+                  Critical Health Profile
+                </h2>
+              </div>
+
+              <div class="grid-2col" style="margin-bottom: 1.25rem;">
+                <div style="background: var(--bg-main); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-light);">
+                  <div style="font-size: 0.75rem; color: var(--muted-text); font-weight: 700; text-transform: uppercase;">BLOOD GROUP</div>
+                  <div style="font-size: 1.5rem; font-weight: 800; color: var(--danger);" id="em-blood-group">B+</div>
+                </div>
+
+                <div style="background: var(--bg-main); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-light);">
+                  <div style="font-size: 0.75rem; color: var(--muted-text); font-weight: 700; text-transform: uppercase;">ATTENDING DOCTOR</div>
+                  <div style="font-size: 1rem; font-weight: 700; color: var(--dark-text);" id="em-doctor-name">Dr. Jenkins</div>
+                </div>
+              </div>
+
+              <div style="background: var(--danger-bg); padding: 1rem; border-radius: var(--radius-md); border: 1px solid rgba(232, 93, 102, 0.2);">
+                <div style="font-size: 0.75rem; color: var(--danger); font-weight: 700; text-transform: uppercase; margin-bottom: 0.25rem;">KNOWN MEDICAL ALLERGIES</div>
+                <div style="font-size: 0.95rem; font-weight: 600; color: var(--danger);" id="em-allergies">Penicillin, Sulfa drugs</div>
+              </div>
+            </div>
+
+            <!-- National Emergency Hotlines (Simulated) -->
+            <div class="card">
+              <div class="card-header">
+                <h2 class="card-title">Direct Public Helplines</h2>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                <div style="display: flex; align-items: center; justify-content: space-between; padding: 0.65rem 0.85rem; background: var(--bg-main); border-radius: var(--radius-md);">
+                  <div>
+                    <strong style="color: var(--dark-text);">National Emergency Response</strong>
+                    <div style="font-size: 0.75rem; color: var(--muted-text);">Police, Fire &amp; Rescue</div>
+                  </div>
+                  <a href="tel:112" class="btn btn-sm btn-outline">Call 112</a>
+                </div>
+
+                <div style="display: flex; align-items: center; justify-content: space-between; padding: 0.65rem 0.85rem; background: var(--bg-main); border-radius: var(--radius-md);">
+                  <div>
+                    <strong style="color: var(--dark-text);">Emergency Ambulance Service</strong>
+                    <div style="font-size: 0.75rem; color: var(--muted-text);">Paramedic Rapid Dispatch</div>
+                  </div>
+                  <a href="tel:102" class="btn btn-sm btn-outline">Call 102</a>
+                </div>
+
+                <div style="display: flex; align-items: center; justify-content: space-between; padding: 0.65rem 0.85rem; background: var(--bg-main); border-radius: var(--radius-md);">
+                  <div>
+                    <strong style="color: var(--dark-text);">National Poison Helpline</strong>
+                    <div style="font-size: 0.75rem; color: var(--muted-text);">24/7 Toxic Substance Support</div>
+                  </div>
+                  <a href="tel:18002221222" class="btn btn-sm btn-outline">Call 1800</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Edit Emergency Modal -->
+  <div class="modal-overlay" id="edit-emergency-modal">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 class="modal-title">Edit Emergency Contacts &amp; Details</h3>
+        <button class="modal-close" id="close-emergency-modal">&times;</button>
+      </div>
+      <form id="emergency-form" novalidate>
+        <div class="modal-body">
+          <h4 style="font-size: 0.95rem; color: var(--primary); margin-bottom: 0.75rem;">Primary Emergency Contact</h4>
+          <div class="grid-2col">
+            <div class="form-group">
+              <label for="form-pname" class="form-label">Contact Name *</label>
+              <input type="text" id="form-pname" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label for="form-prelation" class="form-label">Relationship *</label>
+              <input type="text" id="form-prelation" class="form-control" placeholder="e.g. Spouse / Doctor" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="form-pphone" class="form-label">Phone Number *</label>
+            <input type="tel" id="form-pphone" class="form-control" required>
+          </div>
+
+          <h4 style="font-size: 0.95rem; color: var(--primary); margin: 1.25rem 0 0.75rem;">Secondary Contact</h4>
+          <div class="grid-2col">
+            <div class="form-group">
+              <label for="form-sname" class="form-label">Secondary Contact Name</label>
+              <input type="text" id="form-sname" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="form-srelation" class="form-label">Relationship</label>
+              <input type="text" id="form-srelation" class="form-control">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="form-sphone" class="form-label">Secondary Phone</label>
+            <input type="tel" id="form-sphone" class="form-control">
+          </div>
+
+          <h4 style="font-size: 0.95rem; color: var(--primary); margin: 1.25rem 0 0.75rem;">Medical Profile</h4>
+          <div class="grid-2col">
+            <div class="form-group">
+              <label for="form-blood" class="form-label">Blood Group</label>
+              <input type="text" id="form-blood" class="form-control" placeholder="e.g. B Positive (B+)">
+            </div>
+            <div class="form-group">
+              <label for="form-docname" class="form-label">Attending Doctor</label>
+              <input type="text" id="form-docname" class="form-control">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="form-allergies" class="form-label">Known Allergies</label>
+            <input type="text" id="form-allergies" class="form-control" placeholder="e.g. Penicillin, NSAIDs, Peanuts">
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" id="btn-cancel-em">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btn-save-em">Save Contacts</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+
+  <script src="js/storage.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/emergency.js"></script>
+</body>
+</html>
+

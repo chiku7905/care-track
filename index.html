@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Inline theme: prevents white flash before CSS loads -->
+  <script>
+    (function(){
+      try {
+        var s = localStorage.getItem('caretrack_session');
+        var theme = 'light';
+        if (s) {
+          var sess = JSON.parse(s);
+          if (sess && sess.userId) {
+            var st = localStorage.getItem('caretrack_settings_' + sess.userId);
+            if (st) { var settings = JSON.parse(st); if (settings && settings.theme) theme = settings.theme; }
+          }
+        }
+        if (theme === 'light') theme = localStorage.getItem('caretrack_theme') || 'light';
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch(e) {}
+    })();
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CareTrack — Modern Healthcare Management System</title>
+  <link rel="icon" type="image/svg+xml" href="assets/icon.svg">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="landing-nav">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <img src="assets/logo.svg" alt="CareTrack Logo" height="38">
+      </a>
+
+      <button class="nav-toggle-mobile" id="mobile-nav-btn" aria-label="Toggle navigation">
+        ☰
+      </button>
+
+      <ul class="nav-menu" id="nav-menu-list">
+        <li><a href="index.html" class="nav-link active">Home</a></li>
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#features" class="nav-link">Features</a></li>
+        <li><a href="#how-it-works" class="nav-link">How It Works</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button class="btn-icon theme-toggle-btn" title="Toggle Dark/Light Mode">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+        <a href="login.html" class="btn btn-outline btn-sm">Log In</a>
+        <a href="signup.html" class="btn btn-primary btn-sm">Get Started</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section" id="about">
+    <div class="hero-content">
+      <div class="hero-tag">
+        <span>✨</span> Next-Generation Health Companion
+      </div>
+      <h1 class="hero-title">
+        Better Care. <br>
+        <span>Stronger Connections.</span>
+      </h1>
+      <p class="hero-description">
+        CareTrack empowers patients, families, and caregivers with intelligent medicine tracking, seamless doctor appointment coordination, organized health records, and swift emergency alerts.
+      </p>
+
+      <div class="hero-cta-group">
+        <a href="signup.html" class="btn btn-primary btn-lg">Get Started Free</a>
+        <a href="#features" class="btn btn-outline btn-lg">Explore Features</a>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat-item">
+          <h4>99.4%</h4>
+          <p>Medication Adherence</p>
+        </div>
+        <div class="stat-item">
+          <h4>50k+</h4>
+          <p>Scheduled Checkups</p>
+        </div>
+        <div class="stat-item">
+          <h4>24/7</h4>
+          <p>Emergency Readiness</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Interactive Mockup Preview -->
+    <div class="hero-mockup-wrapper">
+      <div class="hero-mockup-card">
+        <div class="mockup-header">
+          <div class="mockup-header-left">
+            <div class="mockup-avatar">KS</div>
+            <div>
+              <div style="font-weight: 700; color: var(--dark-text); font-size: 0.95rem;">Kartavya Singh</div>
+              <div style="font-size: 0.75rem; color: var(--muted-text);">Cardiovascular Health Track</div>
+            </div>
+          </div>
+          <div class="mockup-status-dot" title="Active Monitoring"></div>
+        </div>
+
+        <div class="mockup-mini-grid">
+          <div class="mockup-metric-box">
+            <div class="number text-primary">4 / 4</div>
+            <div class="label">Today's Medicines</div>
+          </div>
+          <div class="mockup-metric-box">
+            <div class="number text-success">85%</div>
+            <div class="label">Care Tasks Done</div>
+          </div>
+        </div>
+
+        <div class="mockup-schedule-card">
+          <div>
+            <div style="font-size: 0.75rem; color: var(--muted-text); font-weight: 600;">NEXT APPOINTMENT</div>
+            <div style="font-size: 0.9rem; font-weight: 700; color: var(--dark-text);">Dr. Sarah Jenkins</div>
+            <div style="font-size: 0.75rem; color: var(--primary);">Tomorrow, 10:30 AM</div>
+          </div>
+          <span class="mockup-pill-badge">Confirmed</span>
+        </div>
+      </div>
+
+      <!-- Floating Badges -->
+      <div class="floating-badge badge-top-right">
+        <span style="font-size: 1.25rem;">💊</span>
+        <div>
+          <div style="font-weight: 700; font-size: 0.8rem; color: var(--dark-text);">Metformin 500mg</div>
+          <div style="font-size: 0.7rem; color: var(--success); font-weight: 600;">Taken at 08:00 AM</div>
+        </div>
+      </div>
+
+      <div class="floating-badge badge-bottom-left">
+        <span style="font-size: 1.25rem;">🩺</span>
+        <div>
+          <div style="font-weight: 700; font-size: 0.8rem; color: var(--dark-text);">Blood Pressure: Normal</div>
+          <div style="font-size: 0.7rem; color: var(--muted-text);">120 / 80 mmHg logged</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features-section" id="features">
+    <div class="section-container">
+      <div class="section-header">
+        <div class="section-tag">COMPREHENSIVE CAPABILITIES</div>
+        <h2 class="section-title">Designed for Everyday Health Wellness</h2>
+        <p class="section-desc">Experience an intuitive interface crafted to keep your medical routine organized, transparent, and completely under control.</p>
+      </div>
+
+      <div class="features-grid">
+        <!-- Feature 1 -->
+        <div class="feature-card">
+          <div class="feature-icon-wrapper">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"></path>
+              <path d="m8.5 8.5 7 7"></path>
+            </svg>
+          </div>
+          <h3>Medicine Reminders</h3>
+          <p>Never miss a dose. Track active prescriptions, dosage schedules, meal instructions, and log daily intake with ease.</p>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="feature-card">
+          <div class="feature-icon-wrapper">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+          </div>
+          <h3>Appointment Management</h3>
+          <p>Seamlessly coordinate upcoming visits with specialists, clinic locations, reminders, and historical consultation records.</p>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="feature-card">
+          <div class="feature-icon-wrapper">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+          </div>
+          <h3>Health Records</h3>
+          <p>Store, categorize, and access lab reports, diagnostic scans, vaccination slips, and doctor prescriptions securely in one hub.</p>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="feature-card">
+          <div class="feature-icon-wrapper">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+          </div>
+          <h3>Family & Caregiver Connection</h3>
+          <p>Keep trusted caregivers and family updated with quick emergency calls, blood group details, and essential health allergies.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section class="how-section" id="how-it-works">
+    <div class="section-container">
+      <div class="section-header">
+        <div class="section-tag">SIMPLE WORKFLOW</div>
+        <h2 class="section-title">How CareTrack Works</h2>
+        <p class="section-desc">Get started in three effortless steps and take charge of your wellness journey today.</p>
+      </div>
+
+      <div class="how-steps-grid">
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <h3>Create Your Profile</h3>
+          <p>Sign up in seconds or log in using one of our pre-configured demo patient profiles to preview your personalized care space.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <h3>Set Medicines & Schedule</h3>
+          <p>Add your active prescriptions, daily health tasks, and upcoming doctor appointments with custom reminders.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <h3>Track, Comply & Thrive</h3>
+          <p>Check off daily doses, view your weekly wellness activity chart, and share your records effortlessly whenever needed.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Banner -->
+  <section class="cta-banner-section">
+    <div class="section-container">
+      <div class="cta-banner-card">
+        <h2>Ready to Simplify Your Healthcare?</h2>
+        <p>Join thousands of proactive individuals and families taking control of their health routines with CareTrack.</p>
+        <a href="signup.html" class="btn btn-light">Get Started Now — It's Free</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="landing-footer" id="contact">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo">
+          <img src="assets/logo.svg" alt="CareTrack Logo" height="36">
+        </a>
+        <p>Empowering individuals with modern, compassionate, and organized healthcare management tools right in the browser.</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Platform</h4>
+        <ul class="footer-links">
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="medicines.html">Medicines</a></li>
+          <li><a href="appointments.html">Appointments</a></li>
+          <li><a href="tasks.html">Care Tasks</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <ul class="footer-links">
+          <li><a href="records.html">Health Records</a></li>
+          <li><a href="emergency.html">Emergency Guide</a></li>
+          <li><a href="login.html">Demo Accounts</a></li>
+          <li><a href="settings.html">Preferences</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Contact & Demo</h4>
+        <ul class="footer-links">
+          <li><a href="mailto:support@caretrack.demo">support@caretrack.demo</a></li>
+          <li><a href="tel:+919453583811">+91 94535 83811</a></li>
+          <li><span style="color: var(--muted-text); font-size: 0.85rem;">CareTrack Tech Labs, Educational Demo</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div>&copy; 2026 CareTrack Systems Inc. All rights reserved.</div>
+      <div>Designed for educational and healthcare management demonstration.</div>
+    </div>
+  </footer>
+
+  <script src="js/storage.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/common.js"></script>
+  <script>
+    // Mobile navigation toggle
+    const mobileBtn = document.getElementById('mobile-nav-btn');
+    const navMenu = document.getElementById('nav-menu-list');
+    if (mobileBtn && navMenu) {
+      mobileBtn.addEventListener('click', function() {
+        navMenu.classList.toggle('open');
+      });
+      // Close menu when a link is clicked
+      navMenu.querySelectorAll('.nav-link').forEach(function(link) {
+        link.addEventListener('click', function() {
+          navMenu.classList.remove('open');
+        });
+      });
+    }
+
+    // Wire landing page theme toggle through Common
+    document.addEventListener('DOMContentLoaded', function() {
+      // initHeaderAndSidebar() not called on landing page, wire theme toggles manually
+      document.querySelectorAll('.theme-toggle-btn').forEach(function(btn) {
+        btn.onclick = function() { Common.toggleTheme(); };
+      });
+      // Sync initial icon
+      const theme = document.documentElement.getAttribute('data-theme') || 'light';
+      Common.updateThemeIcon(theme);
+    });
+  </script>
+</body>
+</html>
